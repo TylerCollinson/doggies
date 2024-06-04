@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Good Doggies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #333;
+    }
+    .dog-container {
+      margin-top: 20px;
+    }
+    .dog-image {
+      border: 5px solid #ccc;
+      border-radius: 10px;
+      margin: 10px;
+      max-width: 100%;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-top: 20px;
+      cursor: pointer;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Good Doggies 😊</h1>
+    <p>Hold enter for a large dose of pics</p>
+    <div class="dog-container" id="dogContainer">
+      <!-- Dog images will be appended here -->
+    </div>
+    <button class="button" id="fetchButton">Fetch More Doggies</button>
+  </div>
+
+  <script>
+    // Function to fetch a random dog image and display it
+    function fetchDogImage() {
+      fetch('https://dog.ceo/api/breeds/image/random')
+        .then((response) => response.json())
+        .then((data) => {
+          // Access the image URL from the fetched data
+          const imageUrl = data.message;
+
+          // Create an img element
+          const imgElement = document.createElement('img');
+
+          // Set the src attribute of the img element to the fetched image URL
+          imgElement.src = imageUrl;
+          imgElement.alt = 'A good doggy';
+          imgElement.className = 'dog-image';
+
+          // Append the img element to the dogContainer
+          const dogContainer = document.getElementById('dogContainer');
+          dogContainer.appendChild(imgElement);
+        })
+        .catch((error) => {
+          console.log('Error occurred: ' + error);
+        });
+    }
+
+    // Add an event listener to the button to fetch more dog images
+    document.getElementById('fetchButton').addEventListener('click', fetchDogImage);
+
+    // Fetch an initial dog image when the page loads
+    fetchDogImage();
+  </script>
+</body>
+</html>
